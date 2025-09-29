@@ -15,7 +15,7 @@ const LatestCollection = () => {
   return (
     <div className='my-10'>
         <div className='text-center py-8 text-3xl'>
-            <Title text1={'Bộ sưu tập '} text2={'Mới nhất '} />
+            <Title text1={'Bộ sưu tập '} text2={'mới nhất '} />
         </div>
 
 

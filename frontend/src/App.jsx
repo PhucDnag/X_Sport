@@ -1,10 +1,6 @@
+// App.jsx (cập nhật)
 import { Route, Routes } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
-import ProtectedRoute from "./components/ProtectedRoute";
-import SearchBar from "./components/SearchBar";
+import Layout from "./components/Layout"; // Import Layout mới
 import About from "./pages/About";
 import Cart from "./pages/Cart";
 import Collection from "./pages/Collection";
@@ -16,16 +12,17 @@ import PlaceOrder from "./pages/PlaceOrder";
 import Product from "./pages/Product";
 import Profile from "./pages/Profile";
 import Verify from "./pages/Verify";
+import Terms from './pages/Terms';
+import Privacy from "./pages/Privacy";
+import Shipping from "./pages/Shipping";
+import NotFound from "./pages/NotFound"; // Import NotFound
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
-
- 
   return (
-    <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
-      <ToastContainer />
-      <Navbar />
-      <SearchBar />
-      <Routes>
+    <Routes>
+      {/* Nested routes với Layout cho các trang chính */}
+      <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/collection" element={<Collection />} />
         <Route path="/about" element={<About />} />
@@ -36,6 +33,9 @@ const App = () => {
         <Route path="/place-order" element={<PlaceOrder />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/verify" element={<Verify />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} /> 
+        <Route path="/shipping" element={<Shipping />} />
         <Route
           path="/profile"
           element={
@@ -44,9 +44,11 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-      </Routes>
-      <Footer />
-    </div>
+      </Route>
+      
+      {/* Route 404 riêng biệt, không có Layout */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };
 

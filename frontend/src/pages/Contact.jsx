@@ -3,29 +3,38 @@ import Title from '../components/Title'
 import { assets } from '../assets/assets'
 import NewsletterBox from '../components/NewsletterBox'
 import { useForm, ValidationError } from '@formspree/react';
+import SuccessMessage from '../pages/SuccessMessage';
+
 const Contact = () => {
 
-  const [state, handleSubmit] = useForm("xeokwkeg");
+  const [state, handleSubmit] = useForm("xnngnrze");
   if (state.succeeded) {
-      return <p>Cảm ơn bạn đã gửi lời nhắn cho Shop!</p>;
+      return <SuccessMessage />;
   }
 
   return (
-    <div>
+    <div className='bg-white py-5'>
 
       <div className='text-center text-2xl pt-10 border-t'>
-          <Title text1={'Liên hệ'} text2={'về chúng tôi'}/>
+          <Title text1={'Liên hệ'} text2={'với chúng tôi'}/>
       </div>
 
-      <div className='my-10 flex flex-col justify-center md:flex-row gap-10 mb-28'>
-        <img className='w-full md:max-w-[480px] rounded' src={assets.contact_img} alt="" />
+      <div className='my-10 flex flex-col justify-center md:flex-row gap-8 mb-28'>
+        <img className='w-full md:max-w-[480px] rounded' src={assets.contact_img} alt="Contact" />
         <div className='flex flex-col justify-center items-start gap-6'>
-          <p className='font-semibold text-xl text-gray-600'> Nơi giải đáp toàn bộ mọi thắc mắc của bạn?</p>
-          <p className='text-gray-500'> 981 Kim Giang <br />Thanh Trì,Hà Nội,Việt Nam</p>
-          <p className='text-gray-500'> Số điện thoại chủ shop: 039 4996777 <br />Email: xuanthuc123412@gmail.com</p>
-          <p className='text-gray-500'> Hotline: 059 2016789 <br />Email: tlook@gmail.com</p>
-          <form onSubmit={handleSubmit} className='flex flex-col gap-2  sm:w-[500px]'>
-            <label htmlFor="email">
+          <p className='font-semibold text-xl text-gray-600'>
+            Chúng tôi luôn sẵn sàng lắng nghe và giải đáp mọi thắc mắc của bạn.
+          </p>
+
+          <div className='text-gray-500'>
+            <p>📍 Địa chỉ: [Địa chỉ cửa hàng demo]</p>
+            <p>📞 Số điện thoại: [Số điện thoại demo]</p>
+            <p>📱 Hotline: [Hotline demo]</p>
+            <p>✉️ Email: [Email demo]</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className='flex flex-col gap-2 w-[100%]'>
+            <label htmlFor="email" className='font-medium text-gray-600'>
               Email liên hệ của bạn
             </label>
             <input
@@ -40,26 +49,35 @@ const Contact = () => {
               field="email"
               errors={state.errors}
             />
+
+            <label htmlFor="message" className='font-medium text-gray-600'>
+              Nội dung tin nhắn
+            </label>
             <textarea
               id="message"
               name="message"
+              rows="4"
               className='border p-2 rounded'
-              placeholder='Hãy lại lời nhắn của bạn...'
+              placeholder='Hãy để lại lời nhắn của bạn...'
             />
             <ValidationError 
               prefix="Message" 
               field="message"
               errors={state.errors}
             />
-            <button type="submit" className='border rounded border-black px-8 py-2 text-sm hover:bg-black hover:text-white transition-all duration-300' disabled={state.submitting}>
-              Submit
+
+            <button 
+              type="submit" 
+              className='border rounded border-black px-8 py-2 text-sm hover:bg-black hover:text-white transition-all duration-300' 
+              disabled={state.submitting}
+            >
+              Gửi ngay
             </button>
           </form>
-          {/* <button className='border border-black px-8 py-2 text-sm hover:bg-black hover:text-white transition-all duration-300'>Explore Jobs</button> */}
         </div>
       </div>
   
-    <NewsletterBox />
+      {/* <NewsletterBox /> */}
     
     </div>
   )

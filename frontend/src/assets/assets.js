@@ -42,8 +42,9 @@ import p_img26 from './p_img26.webp'
 
 
 
-import logo from './logo_tlook.png'
-import hero_img from './hero_img.png'
+import logo from './logo_xsports.png'
+import logo2 from './logo_main.png'
+import hero_img from './Green And White Modern Introduction Basics Rules Techniques Badminton Presentation (2).png'
 import cart_icon from './cart_icon.png'
 import bin_icon from './bin_icon.png'
 import dropdown_icon from './dropdown_icon.png'
@@ -55,14 +56,21 @@ import star_dull_icon from './star_dull_icon.png'
 import star_icon from './star_icon.png'
 import support_img from './support_img.png'
 import menu_icon from './menu_icon.png'
-import about_img from './about_img.png'
-import contact_img from './contact_img.png'
+import about_img from './about_img_final.png'
+import contact_img from './contact_img_ok.png'
 import razorpay_logo from './razorpay_logo.png'
 import stripe_logo from './stripe_logo.png'
 import cross_icon from './cross_icon.png'
+import khach_hang_1 from './khach_hang_1.jpg'
+import khach_hang_2 from './khach_hang_2.jpg'
+import khach_hang_3 from './khach_hang_3.jpg'
+import khach_hang_4 from './khach_hang_4.jpg'
+import khach_hang_5 from './khach_hang_5.jpg'
+import khach_hang_6 from './khach_hang_6.jpg'
 
 export const assets = {
     logo,
+    logo2,
     hero_img,
     cart_icon,
     dropdown_icon,
@@ -79,7 +87,13 @@ export const assets = {
     contact_img,
     razorpay_logo,
     stripe_logo,
-    cross_icon
+    cross_icon,
+    khach_hang_1,
+    khach_hang_2,
+    khach_hang_3,
+    khach_hang_4,
+    khach_hang_5,
+    khach_hang_6
 }
 
 export const products =[
