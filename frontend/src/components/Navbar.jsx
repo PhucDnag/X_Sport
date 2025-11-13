@@ -44,13 +44,13 @@ const Navbar = () => {
 
         <div className="flex items-center gap-4">
           {/* Search Button */}
-          {/* <button 
+          <button 
             onClick={() => setShowSearch(true)} 
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
             aria-label="Search"
           >
             <img src={assets.search_icon} className="w-5 h-5" alt="Search" />
-          </button> */}
+          </button>
 
           {/* Profile Dropdown */}
           <div className="group relative">

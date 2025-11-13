@@ -1,6 +1,6 @@
 // src/pages/Terms.jsx
 import React from 'react';
-import { Link } from 'react-router-dom';  // Import Link cho nút quay về
+import { Link } from 'react-router-dom';
 
 const Terms = () => {
   return (

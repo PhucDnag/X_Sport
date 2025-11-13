@@ -45,8 +45,7 @@ const App = () => {
           }
         />
       </Route>
-      
-      {/* Route 404 riêng biệt, không có Layout */}
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
