@@ -369,21 +369,19 @@ const getUserProfile = async (req, res) => {
 };
 
 const getCurrentUser = async (req, res) => {
-    const userId = req.userId;
-    console.log("userIdfsdfd");
   try {
+    const userId = req.userId; // Lấy từ middleware auth
 
-    const user = await userModel.findById(userId).select(
-    "-password -createdAt -updatedAt"
-  );
-//   if (!user) {
-//     throw new Error("Không tìm thấy người dùng");
-//   }
-    
-    
-    return res.status(200).json({ success: true, data: user });
+    const user = await userModel.findById(userId).select("-password -createdAt -updatedAt -cartData");
+
+    if (!user) {
+      return res.json({ success: false, message: "Không tìm thấy người dùng" });
+    }
+
+    res.json({ success: true, user }); // Trả về key 'user' cho đồng bộ với các hàm khác
   } catch (error) {
-    res.status(404).json({ success: false, message: error.message });
+    console.log(error);
+    res.json({ success: false, message: error.message });
   }
 };
 

@@ -3,7 +3,6 @@ import Hero from '../components/Hero'
 import LatestCollection from '../components/LatestCollection'
 import BestSeller from '../components/BestSeller'
 import OurPolicy from '../components/OurPolicy'
-import NewsletterBox from '../components/NewsletterBox'
 import Evaluate from '../components/Evaluate'
 
 const Home = () => {
@@ -14,7 +13,6 @@ const Home = () => {
       <BestSeller />
       <OurPolicy />
       <Evaluate />
-      {/* <NewsletterBox /> */}
     </div>
   )
 }

@@ -45,8 +45,8 @@ const ProductItem = ({id, image, name, price}) => {
                     {name}
                 </h3>
                 
-                <div className='flex items-center justify-between'>
-                    <p className='text-lg font-bold text-red-600'>
+                <div className='flex flex-col items-center justify-between'>
+                    <p className='md:text-base sm:text-sm font-bold text-red-600'>
                         {price.toLocaleString('vi-VN')}{currency}
                     </p>
                     

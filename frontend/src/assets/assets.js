@@ -58,7 +58,6 @@ import support_img from './support_img.png'
 import menu_icon from './menu_icon.png'
 import about_img from './about_img_final.png'
 import contact_img from './contact_img_ok.png'
-import razorpay_logo from './razorpay_logo.png'
 import stripe_logo from './stripe_logo.png'
 import cross_icon from './cross_icon.png'
 import khach_hang_1 from './khach_hang_1.jpg'
@@ -67,6 +66,8 @@ import khach_hang_3 from './khach_hang_3.jpg'
 import khach_hang_4 from './khach_hang_4.jpg'
 import khach_hang_5 from './khach_hang_5.jpg'
 import khach_hang_6 from './khach_hang_6.jpg'
+import bg_tuvan from './bg_tuvan.jpg'
+import hero_khach_hang from './hero_khachhang.png'
 
 export const assets = {
     logo,
@@ -85,7 +86,6 @@ export const assets = {
     menu_icon,
     about_img,
     contact_img,
-    razorpay_logo,
     stripe_logo,
     cross_icon,
     khach_hang_1,
@@ -93,7 +93,9 @@ export const assets = {
     khach_hang_3,
     khach_hang_4,
     khach_hang_5,
-    khach_hang_6
+    khach_hang_6,
+    bg_tuvan,
+    hero_khach_hang
 }
 
 export const products =[

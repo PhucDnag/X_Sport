@@ -299,3 +299,16 @@ a.active .absolute {
 .opacity-0 {
   opacity: 0;
 }
+
+/* Ẩn scrollbar mặc định */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE và Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}
+/* Ẩn scrollbar khi hover vào container */
+.scrollbar-hide:hover {
+  overflow: hidden;  /* Tắt scroll hoàn toàn khi hover */
+}

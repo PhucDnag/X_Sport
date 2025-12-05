@@ -159,12 +159,12 @@ const Evaluate = () => {
     return (
         <>
             {/* KHỐI 1: KHÁCH HÀNG NÓI GÌ - ĐÃ CHUYỂN SANG SLIDER */}
-            <div className="py-12 px-4 relative group">  {/* Thêm group để kiểm soát hover buttons */}
+            <div className="py-8 px-4 relative group">  {/* Thêm group để kiểm soát hover buttons */}
                 {/* Title section */}
-                <div className="text-xl pb-4 text-center">
+                <div className="text-xl pb-2 text-center">
                     <Title text1={'Khách hàng'} text2={'nói gì về X-sport'} checked={false} />
                 </div>
-                <p className="text-center text-gray-500 mb-10 max-w-2xl mx-auto">
+                <p className="text-center text-gray-500 mb-2 max-w-2xl mx-auto">
                     Những lời bình thực tế của khách hàng đã tin tưởng và mua hàng tại X-sport.
                 </p>
 

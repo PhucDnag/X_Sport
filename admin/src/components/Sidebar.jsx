@@ -2,48 +2,49 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { assets } from "../assets/assets";
 
+const menuItems = [
+  { to: "/", label: "Dashboard", icon: assets.dashboard_icon },
+  { to: "/add", label: "Thêm sản phẩm", icon: assets.add_icon },
+  { to: "/list", label: "Danh sách sản phẩm", icon: assets.order_icon },
+  { to: "/orders", label: "Danh sách đơn hàng", icon: assets.list_order_icon },
+  { to: "/users", label: "Quản lý tài khoản", icon: assets.user_icon },
+  { to: "/statistics", label: "Thống kê & Báo cáo", icon: assets.thongke_icon },
+];
+
 const Sidebar = () => {
   return (
-    <div className="w-[18%] min-h-screen border-r-2 border-r-gray-300">
-      <div className="flex flex-col gap-4 pt-6 pl-[20%] text-[15px]">
-        <NavLink className="flex items-center gap-3 border border-gray-300 border-r-0 px-3 py-2 rounded-l" to="/">
-          <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold">
-             <img src={assets.dashboard_icon} alt="" />
-          </div>
-          <p className="hidden md:block">Dashboard</p>
-        </NavLink>
+    <div
+      className="
+        min-h-screen bg-white border-r border-r-gray-200 shadow-sm
+        w-[70px] md:w-[260px]
+        transition-all duration-300
+      "
+    >
+      <div className="flex flex-col gap-2 pt-6 px-2 md:px-4 text-[15px]">
+        {menuItems.map((item, index) => (
+          <NavLink
+            title={item.label}
+            key={index}
+            to={item.to}
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-3 py-3 rounded-lg transition-all
+               ${
+                 isActive
+                   ? "bg-blue-100 text-blue-700 font-semibold"
+                   : "text-gray-700 hover:bg-gray-100"
+               }`
+            }
+          >
+            {/* ICON */}
+            <img
+              className="w-6 h-6 object-contain mx-auto md:mx-0"
+              src={item.icon}
+              alt=""
+            />
 
-        <NavLink className="flex items-center gap-3 border border-gray-300 border-r-0 px-3 py-2 rounded-l" to="/add">
-          <img className="w-6 h-6 icon" src={assets.add_icon} alt="" />
-          <p className="hidden md:block">Thêm sản phẩm</p>
-        </NavLink>
-
-        <NavLink className="flex items-center gap-3 border border-gray-300 border-r-0 px-3 py-2 rounded-l" to="/list">
-          <img className="w-6 h-6 icon" src={assets.order_icon} alt="" />
-          <p className="hidden md:block">Danh sách sản phẩm</p>
-        </NavLink>
-
-        <NavLink className="flex items-center gap-3 border border-gray-300 border-r-0 px-3 py-2 rounded-l" to="/orders">
-          <img className="w-6 h-6 " src={assets.list_order_icon} alt="" />
-          <p className="hidden md:block">Danh sách đơn hàng</p>
-        </NavLink>
-
-        <NavLink className="flex items-center gap-3 border border-gray-300 border-r-0 px-3 py-2 rounded-l" to="/users">
-          <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold">
-            <img src={assets.user_icon} alt="" />
-          </div>
-          <p className="hidden md:block">Quản lý tài khoản khách hàng</p>
-        </NavLink>
-
-        <NavLink
-          className="flex items-center gap-3 border border-gray-300 border-r-0 px-3 py-2 rounded-l"
-          to="/statistics"
-        >
-          <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold">
-            <img src={assets.thongke_icon} alt="" />
-          </div>
-          <p className="hidden md:block">Thống kê & Báo cáo</p>
-        </NavLink>
+            <p className="hidden md:block whitespace-nowrap">{item.label}</p>
+          </NavLink>
+        ))}
       </div>
     </div>
   );

@@ -78,7 +78,7 @@ const Collection = () => {
       {/* filter Options */}
       <div className='min-w-60'>
         <p onClick={()=>setShowfilter(!showFilter)} className='my-2 text-xl flex items-center cursor-pointer gap-2'>BỘ LỌC
-          <img className={`h-3 sm:hidden ${showFilter ? 'rotate-90' : ''}`} src={assets.dropdown_icon} alt="" />
+          <img className={`h-3 md:hidden ${showFilter ? 'rotate-90' : ''}`} src={assets.dropdown_icon} alt="" />
         </p>
         {/* Category Filter */}
         <div className={`border border-gray-300 pl-5 py-3 mt-6 ${showFilter ? '' :'hidden'} sm:block`}>
@@ -112,23 +112,23 @@ const Collection = () => {
         </div>       
       </div>
       {/* Right Side */}
-      <div className='flex-1'>
-        <div className='flex justify-between text-base sm:text-2xl mb-4'>
-          <div className='flex items-center gap-3 mb-4'>
-            <h2 className='text-2xl sm:text-3xl font-bold text-gray-800'>
+      <div className='flex-1 w-full'>
+        <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4 sm:mb-6'>
+          <div className='flex items-center gap-2 sm:gap-3'>
+            <h2 className='text-lg sm:text-2xl md:text-3xl font-bold text-gray-800'>
               TẤT CẢ <span className='text-blue-600'>SẢN PHẨM</span>
             </h2>
           </div>
           {/* Product Sort */}
-          <select onChange={(e)=>setSortType(e.target.value)} className='border-2 border-gray-300 text-sm px-2 cursor-pointer'>
-            <option value="relavent">Sắp xếp theo giá: Liên quan</option>
-            <option value="low-high">Sắp xếp theo giá: Thấp đến Cao</option>
-            <option value="high-low">Sắp xếp theo giá: Cao đến Thấp</option>
+          <select onChange={(e)=>setSortType(e.target.value)} className='border-2 border-gray-300 text-sm sm:text-base px-2 sm:px-3 py-2 cursor-pointer rounded-lg hover:border-blue-400 transition-colors whitespace-nowrap'>
+            <option value="relavent">Sắp xếp: Liên quan</option>
+            <option value="low-high">Giá: Thấp → Cao</option>
+            <option value="high-low">Giá: Cao → Thấp</option>
           </select>
         </div>
 
         {/* Map Products */}
-        <div className='grid grid-cols-2 md:gird-cols-3 lg:grid-cols-4 gap-4 gap-y-6'>
+        <div className='grid grid-cols-2 lg:grid-cols-3 gap-4 gap-y-6'>
           {
             filterProducts.map((item,index)=>(
               <ProductItem key = {index} name={item.name} id={item._id} image={item.image} price={item.price}/>
