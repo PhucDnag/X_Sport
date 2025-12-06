@@ -89,7 +89,7 @@ const Orders = ({ token }) => {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 flex items-center">
+              <h1 className="text-2xl font-bold text-gray-900 flex items-center">
                 <img
                   src={assets.parcel_icon}
                   className="w-8 h-8 mr-3 opacity-80"
@@ -162,21 +162,21 @@ const Orders = ({ token }) => {
                   key={index}
                 >
                   {/* Order Header */}
-                  <div className="bg-gray-50 px-6 py-4 border-b border-gray-100 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
-                    <div className="flex items-center gap-4">
-                      <div className="bg-white p-2 rounded-lg border border-gray-200 shadow-sm">
+                  <div className="bg-gray-50 px-4 py-3 border-b border-gray-100 flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+                    <div className="flex items-center gap-3 min-w-0 flex-1">
+                      <div className="bg-white p-2 rounded-lg border border-gray-200 shadow-sm flex-shrink-0">
                         <img
-                          className="w-8 h-8"
+                          className="w-6 h-6"
                           src={assets.parcel_icon}
                           alt=""
                         />
                       </div>
-                      <div>
-                        <h4 className="font-bold text-gray-800 text-lg">
+                      <div className="min-w-0 flex-1">
+                        <h4 className="font-bold text-gray-800 text-base truncate">
                           #{order._id.slice(-6).toUpperCase()}
                         </h4>
                         <div className="flex gap-2 text-xs mt-1">
-                          <span className="bg-gray-200 text-gray-600 px-2 py-0.5 rounded">
+                          <span className="bg-gray-200 text-gray-600 px-2 py-0.5 rounded whitespace-nowrap">
                             {new Date(order.createdAt).toLocaleDateString(
                               "vi-VN"
                             )}
@@ -185,15 +185,15 @@ const Orders = ({ token }) => {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto">
-                      <p className="text-xl font-bold text-red-600">
+                    <div className="sm:flex items-center justify-between text-center sm:justify-end gap-3 w-full sm:w-auto">
+                      <p className="text-base font-bold text-red-600 flex-shrink-0">
                         {order.amount.toLocaleString("vi-VN")}
                         {currency}
                       </p>
                       <select
                         onChange={(event) => statusHandler(event, order._id)}
                         value={order.status}
-                        className={`px-4 py-2 rounded-lg font-medium text-sm cursor-pointer border-0 outline-none ring-1 ring-inset focus:ring-2 transition-all ${
+                        className={`px-3 py-1.5 my-2 sm:px-3 sm:py-1.5 rounded-lg font-medium text-sm cursor-pointer border-0 outline-none ring-1 ring-inset focus:ring-2 transition-all min-w-0 flex-shrink-0 ${
                           order.status === "Đã giao hàng"
                             ? "bg-green-50 text-green-700 ring-green-600/20 focus:ring-green-600"
                             : order.status === "Đang giao hàng"

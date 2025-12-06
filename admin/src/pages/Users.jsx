@@ -208,17 +208,17 @@ const Users = ({ token }) => {
         </h1>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-4">
-          <form onSubmit={handleSearch} className="flex gap-2 flex-1">
+          <form onSubmit={handleSearch} className="flex sm:flex-row items-center flex-col gap-2 flex-1">
             <input
               type="text"
               placeholder="Tìm kiếm theo tên, email hoặc số điện thoại..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 px-4 py-2 border w-100 sm:w-full border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button
               type="submit"
-              className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors cursor-pointer"
+              className="max-w-30 sm:max-w-none px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors cursor-pointer"
             >
               Tìm kiếm
             </button>

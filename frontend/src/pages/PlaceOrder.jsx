@@ -218,66 +218,89 @@ const PlaceOrder = () => {
 
       {/* Right Side */}
       <div className="mt-8">
-        <div className="mt-8 min-w-80">
+        <div className="mt-8">
           <CartTotal />
         </div>
 
         <div className="mt-12">
-        <div className='text-base lg:text-xl font-bold text-blue-600 uppercase text-center my-3'>
-           <h2>Phương thức thanh toán</h2>
-        </div>
+          <div className="text-base lg:text-xl font-bold text-blue-600 uppercase text-center my-3">
+            <h2>Phương thức thanh toán</h2>
+          </div>
           {/* Payment Methods */}
           <div className="flex flex-col gap-3">
+  {/* Phương thức thanh toán Stripe */}
+  <div
+    onClick={() => setMethod("stripe")}
+    className={`flex items-center gap-4 border-2 p-1.5 px-6 cursor-pointer rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105
+      ${
+        method === "stripe"
+          ? "border-green-500 bg-gradient-to-r from-green-50 to-green-100 shadow-lg ring-2 ring-green-200"
+          : "border-gray-200 hover:border-green-400 hover:bg-gradient-to-r from-gray-50 to-green-50 hover:shadow-md"
+      }
+    `}
+  >
+    <div
+      className={`w-4 h-4 border-2 rounded-full flex items-center justify-center transition-all duration-300 ${
+        method === "stripe" ? "bg-green-500 border-green-500" : "border-gray-400"
+      }`}
+    >
+      {method === "stripe" && <div className="w-2 h-2 bg-white rounded-full"></div>}
+    </div>
+    <img className="h-6" src={assets.stripe_logo} alt="Stripe Logo" />
+  </div>
 
-            {/* Phương thức thanh toán Stripe */}
-            <div
-              onClick={() => setMethod("stripe")}
-              className="flex items-center gap-3 border p-2 px-3 cursor-pointer"
-            >
-              <p
-                className={`min-w-3.5 h-3.5 border rounded-full ${
-                  method === "stripe" ? "bg-green-400" : ""
-                }`}
-              ></p>
-              <img className="h-5 mx-4" src={assets.stripe_logo} alt="" />
-            </div>
+  {/* Phương thức thanh toán VNPAY*/}
+  <div
+    onClick={() => setMethod("vnpay")}
+    className={`flex items-center gap-4 border-2 p-1.5 px-6 cursor-pointer rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105
+      ${
+        method === "vnpay"
+          ? "border-blue-500 bg-gradient-to-r from-blue-50 to-blue-100 shadow-lg ring-2 ring-blue-200"
+          : "border-gray-200 hover:border-blue-400 hover:bg-gradient-to-r from-gray-50 to-blue-50 hover:shadow-md"
+      }
+    `}
+  >
+    <div
+      className={`w-4 h-4 border-2 rounded-full flex items-center justify-center transition-all duration-300 ${
+        method === "vnpay" ? "bg-blue-500 border-blue-500" : "border-gray-400"
+      }`}
+    >
+      {method === "vnpay" && <div className="w-2 h-2 bg-white rounded-full"></div>}
+    </div>
+    <div className="flex items-center gap-2">
+      <span className="text-red-500 text-base font-semibold">VN<span className="text-blue-500">PAY</span></span>
+    </div>
+  </div>
 
-            {/* Phương thức thanh toán VNPAY QR */}
-            <div
-              onClick={() => setMethod("vnpay")}
-              className="flex items-center gap-3 border p-2 px-3 cursor-pointer"
-            >
-              <p
-                className={`min-w-3.5 h-3.5 border rounded-full ${
-                  method === "vnpay" ? "bg-green-400" : ""
-                }`}
-              ></p>
-              <p className="text-gray-700 text-sm font-medium mx-4">VN PAY</p>
-            </div>
+  {/* Phương thức thanh toán khi nhận hàng */}
+  <div
+    onClick={() => setMethod("cod")}
+    className={`flex items-center gap-4 border-2 p-1.5 px-6 cursor-pointer rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105
+      ${
+        method === "cod"
+          ? "border-orange-500 bg-gradient-to-r from-orange-50 to-orange-100 shadow-lg ring-2 ring-orange-200"
+          : "border-gray-200 hover:border-orange-400 hover:bg-gradient-to-r from-gray-50 to-orange-50 hover:shadow-md"
+      }
+    `}
+  >
+    <div
+      className={`w-4 h-4 border-2 rounded-full flex items-center justify-center transition-all duration-300 ${
+        method === "cod" ? "bg-orange-500 border-orange-500" : "border-gray-400"
+      }`}
+    >
+      {method === "cod" && <div className="w-2 h-2 bg-white rounded-full"></div>}
+    </div>
+    <div className="flex items-center gap-2">
+      <span className="text-gray-700 text-base font-semibold">Thanh toán khi nhận hàng</span>
+    </div>
+  </div>
+</div>
 
-            {/* Phương thức thanh toán khi nhận hàng */}
-            <div
-              onClick={() => setMethod("cod")}
-              className="flex items-center gap-3 border p-2 px-3 cursor-pointer"
-            >
-              <p
-                className={`min-w-3.5 h-3.5 border rounded-full ${
-                  method === "cod" ? "bg-green-400" : ""
-                }`}
-              ></p>
-              <p className="text-gray-500 text-sm font-medium mx-4">
-                {" "}
-                Thanh toán khi nhận hàng
-              </p>
-            </div>
-          </div>
 
-          
-
-          <div className="w-full text-end mt-8">
+          <div className="w-full sm:text-end text-center my-8">
             <button
               type="submit"
-              className="bg-black text-white px-16 py-3 tetx-sm"
+              className="bg-black text-white px-8 py-2 tetx-sm font-semibold rounded-md"
             >
               ĐẶT HÀNG
             </button>
