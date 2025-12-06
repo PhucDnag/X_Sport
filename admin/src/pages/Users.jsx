@@ -214,7 +214,7 @@ const Users = ({ token }) => {
               placeholder="Tìm kiếm theo tên, email hoặc số điện thoại..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="flex-1 px-4 py-2 border w-100 sm:w-full border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 px-4 py-2 border w-60 sm:w-full border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button
               type="submit"
