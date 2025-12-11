@@ -225,7 +225,7 @@ const List = ({ token }) => {
 
       {/* Table */}
       <div className="flex flex-col gap-2">
-        <div className="hidden md:grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center border border-gray-300 py-1 px-2 bg-gray-100 text-sm">
+        <div className="hidden xl:grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center text-center border border-gray-300 py-1 px-2 bg-gray-100 text-sm">
           <b>Hình ảnh</b>
           <b>Tên</b>
           <b>Hãng</b>
@@ -236,17 +236,17 @@ const List = ({ token }) => {
         {currentItems.length > 0 ? (
           currentItems.map((item, index) => (
             <div
-              className="grid grid-cols-[1fr_3fr_1fr] md:grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center border border-gray-300 text-sm gap-2 py-1 px-2 hover:bg-gray-100 transition ease-in-out"
+              className="grid grid-cols-[1fr_3fr_1fr] xl:grid-cols-[1fr_3fr_1fr_1fr_1fr] text-center items-center border border-gray-300 text-sm gap-2 py-1 px-2 hover:bg-gray-100 transition ease-in-out"
               key={index}
             >
               <img
-                className="w-20 object-cover h-20"
+                className="w-20 object-cover h-20 mx-auto"
                 src={item.image[0]}
                 alt=""
               />
               <p className="text-orange-600 font-medium">{item.name}</p>
               <p className="text-blue-600">{item.category}</p>
-              <p className="text-red-600 font-bold">
+              <p className="text-red-600 font-bold text-sm">
                 {item.price.toLocaleString("vi-VN")}
                 {currency}
               </p>

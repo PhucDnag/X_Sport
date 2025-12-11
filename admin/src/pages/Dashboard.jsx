@@ -9,10 +9,20 @@ const Dashboard = ({ token }) => {
   const [stats, setStats] = useState({});
   const [loading, setLoading] = useState(true);
 
+  // Filter mặc định cho Dashboard (Xem tất cả từ trước tới nay)
+  const dashboardFilters = {
+    period: "all",
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+    day: new Date().getDate(),
+  };
+
+  // Hàm này vẫn giữ để lấy dữ liệu cho phần "Trạng thái đơn hàng" bên dưới
   const fetchStats = async () => {
     try {
+      // Gọi API với filter mặc định để lấy status
       const response = await axios.get(
-        `${backendUrl}/api/statistics/overview`,
+        `${backendUrl}/api/statistics/overview?period=all`, 
         {
           headers: { token },
         }
@@ -31,10 +41,6 @@ const Dashboard = ({ token }) => {
     fetchStats();
   }, []);
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("vi-VN").format(amount) + " đ";
-  };
-
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -50,8 +56,10 @@ const Dashboard = ({ token }) => {
         <p className="text-gray-600 mt-2">Tổng quan hệ thống X-Sport</p>
       </div>
 
-      {/* Quick Stats */}
-      <QuickStats token={token} />
+      {/* --- PHẦN BẠN CẦN SỬA --- */}
+      {/* Truyền filters vào QuickStats để component này tự gọi API và hiển thị số liệu tổng */}
+      <QuickStats token={token} filters={dashboardFilters} />
+      {/* ------------------------ */}
 
       {/* Order Status */}
       <div className="bg-white p-6 rounded-lg shadow-md mb-8">

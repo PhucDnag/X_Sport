@@ -2,23 +2,53 @@ import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import productModel from "../models/productModel.js";
 
-// API thống kê tổng quan
+// Helper: Tạo filter ngày tháng (Dùng chung cho cả Order, User, Product)
+const getDateFilter = (period, year, month, day) => {
+  let startDate, endDate;
+  const y = parseInt(year);
+  const m = parseInt(month);
+  const d = parseInt(day);
+
+  if (period === "day" && y && m && d) {
+    startDate = new Date(y, m - 1, d, 0, 0, 0);
+    endDate = new Date(y, m - 1, d, 23, 59, 59, 999);
+  } else if (period === "month" && y && m) {
+    startDate = new Date(y, m - 1, 1);
+    endDate = new Date(y, m, 0, 23, 59, 59, 999);
+  } else if (period === "year" && y) {
+    startDate = new Date(y, 0, 1);
+    endDate = new Date(y, 11, 31, 23, 59, 59, 999);
+  } else {
+    return {}; // "all" hoặc không có tham số -> Lấy tất cả
+  }
+
+  return {
+    createdAt: {
+      $gte: startDate,
+      $lte: endDate,
+    },
+  };
+};
+
+// 1. API thống kê tổng quan (Đã sửa Total Products theo ngày)
 const getOverallStats = async (req, res) => {
   try {
-    // Thống kê tổng số đơn hàng
-    const totalOrders = await orderModel.countDocuments();
+    const { period, year, month, day } = req.query;
+    const dateFilter = getDateFilter(period, year, month, day);
 
-    // Thống kê tổng số người dùng
-    const totalUsers = await userModel.countDocuments();
+    // Thống kê tổng số đơn hàng (theo thời gian chọn)
+    const totalOrders = await orderModel.countDocuments(dateFilter);
 
-    // Thống kê tổng số sản phẩm
-    const totalProducts = await productModel.countDocuments();
+    // Thống kê tổng số người dùng (Đăng ký mới trong thời gian chọn)
+    const totalUsers = await userModel.countDocuments(dateFilter);
 
-    // Thống kê tổng doanh thu
+    // [FIXED] Thống kê tổng số sản phẩm (Được thêm vào trong thời gian chọn)
+    const totalProducts = await productModel.countDocuments(dateFilter);
+
+    // Thống kê tổng doanh thu (theo thời gian chọn, chỉ tính đơn đã thanh toán)
+    const revenueFilter = { ...dateFilter, payment: true };
     const revenueData = await orderModel.aggregate([
-      {
-        $match: { payment: true },
-      },
+      { $match: revenueFilter },
       {
         $group: {
           _id: null,
@@ -28,8 +58,9 @@ const getOverallStats = async (req, res) => {
     ]);
     const totalRevenue = revenueData.length > 0 ? revenueData[0].totalRevenue : 0;
 
-    // Thống kê số đơn hàng theo trạng thái
+    // Thống kê số đơn hàng theo trạng thái (theo thời gian chọn)
     const ordersByStatus = await orderModel.aggregate([
+      { $match: dateFilter },
       {
         $group: {
           _id: "$status",
@@ -43,7 +74,7 @@ const getOverallStats = async (req, res) => {
       data: {
         totalOrders,
         totalUsers,
-        totalProducts,
+        totalProducts, // Số liệu này giờ đã thay đổi theo filter
         totalRevenue,
         ordersByStatus,
       },
@@ -54,51 +85,22 @@ const getOverallStats = async (req, res) => {
   }
 };
 
-// API thống kê doanh thu theo thời gian
+// 2. API thống kê doanh thu theo thời gian (Biểu đồ cột)
 const getRevenueStats = async (req, res) => {
   try {
-    const { period = "month", year, month } = req.query;
+    const { period, year, month, day } = req.query;
+    const dateFilter = getDateFilter(period, year, month, day);
+    const matchCondition = { ...dateFilter, payment: true };
 
-    let matchCondition = { payment: true };
     let groupBy = {};
-
-    if (period === "day" && year && month) {
-      // Thống kê theo ngày trong tháng
-      const startDate = new Date(year, month - 1, 1);
-      const endDate = new Date(year, month, 0);
-
-      matchCondition.createdAt = {
-        $gte: startDate,
-        $lte: endDate,
-      };
-
-      groupBy = {
-        _id: { $dayOfMonth: "$createdAt" },
-        revenue: { $sum: "$amount" },
-        orderCount: { $sum: 1 },
-      };
-    } else if (period === "month" && year) {
-      // Thống kê theo tháng trong năm
-      const startDate = new Date(year, 0, 1);
-      const endDate = new Date(year, 11, 31);
-
-      matchCondition.createdAt = {
-        $gte: startDate,
-        $lte: endDate,
-      };
-
-      groupBy = {
-        _id: { $month: "$createdAt" },
-        revenue: { $sum: "$amount" },
-        orderCount: { $sum: 1 },
-      };
+    if (period === "day") {
+      groupBy = { _id: { $hour: "$createdAt" }, revenue: { $sum: "$amount" } };
+    } else if (period === "month") {
+      groupBy = { _id: { $dayOfMonth: "$createdAt" }, revenue: { $sum: "$amount" } };
+    } else if (period === "year") {
+      groupBy = { _id: { $month: "$createdAt" }, revenue: { $sum: "$amount" } };
     } else {
-      // Thống kê theo năm
-      groupBy = {
-        _id: { $year: "$createdAt" },
-        revenue: { $sum: "$amount" },
-        orderCount: { $sum: 1 },
-      };
+      groupBy = { _id: { $year: "$createdAt" }, revenue: { $sum: "$amount" } };
     }
 
     const revenueData = await orderModel.aggregate([
@@ -107,85 +109,22 @@ const getRevenueStats = async (req, res) => {
       { $sort: { _id: 1 } },
     ]);
 
-    res.json({
-      success: true,
-      data: revenueData,
-    });
+    res.json({ success: true, data: revenueData });
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
 
-// API thống kê sản phẩm bán chạy
-const getTopProducts = async (req, res) => {
-  try {
-    const { limit = 10 } = req.query;
-
-    const topProducts = await orderModel.aggregate([
-      { $match: { payment: true } },
-      { $unwind: "$items" },
-      {
-        $group: {
-          _id: "$items._id",
-          totalQuantity: { $sum: "$items.quantity" },
-          totalRevenue: { $sum: { $multiply: ["$items.quantity", "$items.price"] } },
-          productName: { $first: "$items.name" },
-        },
-      },
-      { $sort: { totalQuantity: -1 } },
-      { $limit: parseInt(limit) },
-    ]);
-
-    res.json({
-      success: true,
-      data: topProducts,
-    });
-  } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: error.message });
-  }
-};
-
-// API thống kê đơn hàng theo trạng thái
+// 3. API thống kê đơn hàng (Payment Method & Time)
 const getOrderStats = async (req, res) => {
   try {
-    const { period = "month", year, month } = req.query;
+    const { period, year, month, day } = req.query;
+    const dateFilter = getDateFilter(period, year, month, day);
 
-    let matchCondition = {};
-
-    if (period === "day" && year && month) {
-      const startDate = new Date(year, month - 1, 1);
-      const endDate = new Date(year, month, 0);
-
-      matchCondition.createdAt = {
-        $gte: startDate,
-        $lte: endDate,
-      };
-    } else if (period === "month" && year) {
-      const startDate = new Date(year, 0, 1);
-      const endDate = new Date(year, 11, 31);
-
-      matchCondition.createdAt = {
-        $gte: startDate,
-        $lte: endDate,
-      };
-    }
-
-    // Thống kê theo trạng thái
-    const ordersByStatus = await orderModel.aggregate([
-      { $match: matchCondition },
-      {
-        $group: {
-          _id: "$status",
-          count: { $sum: 1 },
-        },
-      },
-    ]);
-
-    // Thống kê theo phương thức thanh toán
+    // [FIXED] Thống kê theo phương thức thanh toán (theo thời gian chọn)
     const ordersByPaymentMethod = await orderModel.aggregate([
-      { $match: matchCondition },
+      { $match: dateFilter }, // Lọc ngày trước
       {
         $group: {
           _id: "$paymentMethod",
@@ -194,37 +133,10 @@ const getOrderStats = async (req, res) => {
       },
     ]);
 
-    // Thống kê đơn hàng theo thời gian
-    let groupBy = {};
-    if (period === "day" && year && month) {
-      groupBy = {
-        _id: { $dayOfMonth: "$createdAt" },
-        orderCount: { $sum: 1 },
-      };
-    } else if (period === "month" && year) {
-      groupBy = {
-        _id: { $month: "$createdAt" },
-        orderCount: { $sum: 1 },
-      };
-    } else {
-      groupBy = {
-        _id: { $year: "$createdAt" },
-        orderCount: { $sum: 1 },
-      };
-    }
-
-    const ordersByTime = await orderModel.aggregate([
-      { $match: matchCondition },
-      { $group: groupBy },
-      { $sort: { _id: 1 } },
-    ]);
-
     res.json({
       success: true,
       data: {
-        ordersByStatus,
         ordersByPaymentMethod,
-        ordersByTime,
       },
     });
   } catch (error) {
@@ -233,12 +145,15 @@ const getOrderStats = async (req, res) => {
   }
 };
 
-
-// API thống kê sản phẩm
+// 4. API thống kê sản phẩm (Category)
 const getProductStats = async (req, res) => {
   try {
-    // Thống kê sản phẩm theo danh mục
+    const { period, year, month, day } = req.query;
+    const dateFilter = getDateFilter(period, year, month, day);
+
+    // [FIXED] Thống kê sản phẩm theo danh mục (Sản phẩm được thêm vào trong thời gian chọn)
     const productsByCategory = await productModel.aggregate([
+      { $match: dateFilter }, // Lọc ngày trước
       {
         $group: {
           _id: "$category",
@@ -247,42 +162,10 @@ const getProductStats = async (req, res) => {
       },
     ]);
 
-    // Thống kê sản phẩm theo danh mục con
-    const productsBySubCategory = await productModel.aggregate([
-      {
-        $group: {
-          _id: "$subCategory",
-          count: { $sum: 1 },
-        },
-      },
-    ]);
-
-    // Thống kê sản phẩm bestseller
-    const bestsellerCount = await productModel.countDocuments({ bestseller: true });
-    const regularCount = await productModel.countDocuments({ bestseller: { $ne: true } });
-
-    // Thống kê giá sản phẩm
-    const priceStats = await productModel.aggregate([
-      {
-        $group: {
-          _id: null,
-          avgPrice: { $avg: "$price" },
-          minPrice: { $min: "$price" },
-          maxPrice: { $max: "$price" },
-        },
-      },
-    ]);
-
     res.json({
       success: true,
       data: {
         productsByCategory,
-        productsBySubCategory,
-        bestsellerStats: {
-          bestseller: bestsellerCount,
-          regular: regularCount,
-        },
-        priceStats: priceStats.length > 0 ? priceStats[0] : null,
       },
     });
   } catch (error) {
@@ -290,5 +173,31 @@ const getProductStats = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
+
+// 5. API Top products (Thường tính trên số lượng bán ra, cần join với Order)
+const getTopProducts = async (req, res) => {
+    // Logic cũ của bạn ok, nếu muốn filter theo ngày bán thì cần match orderModel trước khi unwind
+    try {
+        const { limit = 5 } = req.query;
+        // Nếu muốn top sản phẩm bán chạy theo filter ngày tháng thì thêm params vào query và dùng getDateFilter
+        // Ở đây giữ nguyên logic lấy top all time hoặc bạn tự thêm filter tương tự getRevenueStats
+        const topProducts = await orderModel.aggregate([
+            { $match: { payment: true } },
+            { $unwind: "$items" },
+            {
+                $group: {
+                    _id: "$items._id",
+                    totalQuantity: { $sum: "$items.quantity" },
+                    productName: { $first: "$items.name" }
+                }
+            },
+            { $sort: { totalQuantity: -1 } },
+            { $limit: parseInt(limit) }
+        ]);
+        res.json({ success: true, data: topProducts });
+    } catch (error) {
+        res.json({ success: false, message: error.message });
+    }
+}
 
 export { getOverallStats, getRevenueStats, getTopProducts, getOrderStats, getProductStats };

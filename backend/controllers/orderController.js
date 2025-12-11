@@ -360,7 +360,7 @@ const verifyVnpay = async (req, res) => {
       
       return res.json({ success: true, message: "Thanh toán thành công" });
     } else {
-      // Nếu thanh toán thất bại hoặc hủy, xóa đơn hàng nháp (tùy logic của bạn)
+      // Nếu thanh toán thất bại hoặc hủy, xóa đơn hàng nháp
       await orderModel.findByIdAndDelete(orderId);
       
       return res.json({
