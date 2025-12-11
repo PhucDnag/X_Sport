@@ -1,102 +1,137 @@
-# 🚀 React + Vite Frontend
+# 🚀 React 19 + Vite 6 E-Commerce Frontend
 
-Dự án này được xây dựng bằng **React 19 + Vite 6**, kết hợp **Tailwind CSS**, **React Router**, **Axios** và **React Toastify**.  
-🎯 **Mục tiêu:** Tạo giao diện web **nhanh – nhẹ – dễ mở rộng**.
+![React](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-6-646CFF?style=flat&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-## 🧠 Yêu cầu trước khi chạy (dành cho người mới)
+> **Mục tiêu:** Xây dựng giao diện web **Nhanh – Nhẹ – Dễ mở rộng** phục vụ cho nền tảng thương mại điện tử.
 
-Nếu bạn chưa từng làm việc với **React** hoặc **Node.js**, hãy làm theo các bước dưới đây.
+---
 
-### 1️⃣ Cài đặt Node.js và npm
+## 🛠️ Công Nghệ Sử Dụng
 
-🔗 Truy cập: [https://nodejs.org](https://nodejs.org)  
-→ Bấm **Download LTS (phiên bản ổn định)**  
-→ Cài đặt như phần mềm bình thường (**Next → Next → Finish**)
+Dự án được xây dựng dựa trên các thư viện và công cụ hiện đại nhất:
 
-Sau khi cài xong, mở **Command Prompt (cmd)** hoặc **Terminal** và kiểm tra:
+| Danh mục | Công nghệ |
+| :--- | :--- |
+| **Core** | React 19, Vite 6 |
+| **Styling** | Tailwind CSS |
+| **Routing** | React Router DOM |
+| **HTTP Client** | Axios |
+| **Notification** | React Toastify |
+| **Payment** | Stripe, VNPay |
 
-`node -v`
-`npm -v`
+---
 
+## 🧠 Yêu Cầu Tiên Quyết (Prerequisites)
 
-Nếu thấy hiện số phiên bản *(ví dụ: v20.x.x, 10.x.x)* thì đã cài thành công ✅
+Trước khi bắt đầu, hãy đảm bảo máy tính của bạn đã cài đặt **Node.js**:
 
-## ⚙️ Cách cài đặt và chạy project
+1.  Truy cập [https://nodejs.org](https://nodejs.org) và tải phiên bản **LTS**.
+2.  Kiểm tra cài đặt bằng Terminal/Command Prompt:
 
-### 2️⃣ Clone project từ GitHub
+```bash
+node -v
+# Yêu cầu: v18.x.x trở lên
+npm -v
+```
 
-Mở terminal và gõ:
+---
 
-`git clone https://github.com/<tên-tài-khoản>/<tên-repo>.git`
+## ⚙️ Hướng Dẫn Cài Đặt (Installation)
 
+Làm theo các bước sau để chạy dự án dưới local:
 
-3️⃣ Di chuyển vào thư mục project
-`cd frontend`
+### 1️⃣ Clone dự án
 
-4️⃣ Cài đặt thư viện cần thiết
+```bash
+git clone [https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git)
+```
 
-Chạy lệnh:
-`npm install`
+### 2️⃣ Cài đặt thư viện (Frontend)
 
+Di chuyển vào thư mục frontend và cài đặt các dependencies:
 
-Lệnh này sẽ tự động tải và cài đặt tất cả các thư viện trong file package.json.
+```bash
+cd frontend
+npm install
+```
 
-5️⃣ Chạy project ở chế độ phát triển
+### 3️⃣ Cấu hình biến môi trường
 
-Sau khi cài xong, chạy:
-`npm run dev`
+Tạo file `.env` trong thư mục `frontend`:
 
-
-Nếu thấy hiện ra dòng như sau:
-
-  VITE v6.3.5  ready in 500ms
-  ➜  Local:   http://localhost:5173/
-
-
-👉 Mở trình duyệt và dán địa chỉ http://localhost:5173 để xem giao diện web.
-
-
-⚠️ Nếu bạn thấy lỗi vite: command not found, hãy cài Vite toàn cục:
-`npm install -g vite`
-
-⚛️ Frontend & Admin (.env)
+```ini
+# URL của Backend API (Server)
 VITE_BACKEND_URL=http://localhost:5000
-📌 Giải thích:
-VITE_BACKEND_URL → URL API backend để FE & Admin gọi dữ liệu.
+```
 
-🚀 Backend (.env)
-🗄️ MongoDB Atlas
-Đăng ký tại:
-🔗 https://www.mongodb.com/products/platform/atlas-database
+### 4️⃣ Khởi chạy dự án
+
+```bash
+npm run dev
+```
+
+Sau khi chạy thành công, truy cập: 👉 [http://localhost:5173](http://localhost:5173)
+
+> ⚠️ **Lưu ý:** Nếu gặp lỗi `vite: command not found`, hãy chạy lệnh: `npm install -g vite`
+
+---
+
+## 🔐 Cấu Hình Backend (Server Side)
+
+Để hệ thống hoạt động đầy đủ, bạn cần cấu hình file `.env` trong thư mục **Backend** với các thông số sau:
+
+### 🗄️ Database & Cloud
+
+| Dịch vụ | Biến Môi Trường | Mô tả |
+| :--- | :--- | :--- |
+| **MongoDB** | `MONGODB_URI` | Chuỗi kết nối đến MongoDB Atlas |
+| **Cloudinary** | `CLOUDINARY_API_KEY`... | Cấu hình upload ảnh |
+
+**Code mẫu `.env` cho Backend:**
+
+```ini
+# --- DATABASE ---
+# Đăng ký tại: [https://www.mongodb.com/atlas/database](https://www.mongodb.com/atlas/database)
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/ten_database
 
-☁️ Cloudinary (Quản lý hình ảnh)
-Đăng ký tại:
-🔗 https://cloudinary.com/
-
+# --- CLOUD STORAGE (Hình ảnh) ---
+# Đăng ký tại: [https://cloudinary.com/](https://cloudinary.com/)
+CLOUDINARY_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_SECRET_KEY=your_secret_key
-CLOUDINARY_NAME=your_cloud_name
 
-🔐 Bảo mật JWT
-JWT_SECRET=your_jwt_secret_key
-📌 Dùng để mã hóa token đăng nhập.
+# --- SECURITY (JWT) ---
+# Chuỗi bí mật để mã hóa token
+JWT_SECRET=your_super_secret_key_here
 
-👑 Tài khoản Admin mặc định
+# --- ADMIN ACCOUNT ---
+# Tài khoản quản trị khởi tạo ban đầu
 ADMIN_EMAIL=
 ADMIN_PASSWORD=
-📌 Tài khoản dùng để đăng nhập trang quản trị lần đầu.
+```
 
-💳 Stripe (Thanh toán quốc tế)
-🎥 Video hướng dẫn cấu hình:
-🔗 https://youtu.be/Spp-Mj4dd6k?si=JRRLKkWsE_BdGwYD
+---
+
+## 💳 Cấu Hình Cổng Thanh Toán (Payment Gateways)
+
+Hệ thống hỗ trợ thanh toán qua Stripe (Quốc tế) và VNPay (Việt Nam).
+
+### 1. Stripe
+- 🎥 **Hướng dẫn cấu hình:** [Xem Video](https://youtu.be/Spp-Mj4dd6k?si=JRRLKkWsE_BdGwYD)
+
+```ini
 STRIPE_SECRET_KEY=sk_test_xxxxxxxxxxxxxxxxx
+```
 
-🇻🇳 VNPAY (Thanh toán Việt Nam)
-Đăng ký test tại:
-🔗 https://sandbox.vnpayment.vn/devreg/
+### 2. VNPay
+- 🔗 **Đăng ký Sandbox:** [VNPAY Dev](https://sandbox.vnpayment.vn/devreg/)
 
+```ini
 VNP_TMN_CODE=your_tmn_code
 VNP_HASH_SECRET=your_hash_secret
-VNP_URL=https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
-FRONTEND_URL=
+VNP_URL=[https://sandbox.vnpayment.vn/paymentv2/vpcpay.html](https://sandbox.vnpayment.vn/paymentv2/vpcpay.html)
+FRONTEND_URL=http://localhost:5173
+```

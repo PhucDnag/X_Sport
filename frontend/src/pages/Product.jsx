@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom"; 
+import { useParams, useNavigate } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
 import RelatedProducts from "../components/RelatedProducts";
@@ -43,10 +43,9 @@ const Product = () => {
 
   // --- 5. Hàm xử lý logic Thêm vào giỏ hàng ---
   const handleAddToCart = () => {
-
     if (!token) {
       toast.warning("Vui lòng đăng nhập để mua hàng!");
-      navigate("/login"); 
+      navigate("/login");
       return;
     }
 
@@ -61,13 +60,15 @@ const Product = () => {
         {/* Product Images */}
         <div className="flex-1 flex flex-col-reverse sm:flex-row gap-4">
           {/* Thumbnail list */}
-          <div className="flex sm:flex-col gap-3 overflow-x-auto sm:overflow-y-auto justify-start sm:w-[18%] w-full sm:max-h-[470px] scrollbar-hide p-1.5">
+          <div
+            className="grid grid-cols-4 sm:flex sm:flex-col gap-3 overflow-hidden sm:w-[18%] w-full sm:max-h-[470px] p-1.5"
+          >
             {productData.image.map((item, index) => (
               <img
                 onClick={() => setImage(item)}
                 src={item}
                 key={index}
-                className="w-24 h-24 sm:w-full sm:h-auto object-cover rounded-lg border-2 border-gray-200 cursor-pointer flex-shrink-0 hover:border-blue-500 hover:scale-110 transition-all duration-300 ease-in-out shadow-md"
+                className="w-full h-20 sm:w-full sm:h-auto object-cover rounded-lg border-2 border-gray-200 cursor-pointer hover:border-blue-500 hover:scale-105 transition-all duration-300 shadow-md"
                 alt=""
               />
             ))}
