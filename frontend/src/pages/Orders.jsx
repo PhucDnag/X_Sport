@@ -78,11 +78,13 @@ const Orders = () => {
               >
                 {/* LEFT */}
                 <div className="flex items-center gap-4 flex-1">
+                  {/* --- KHU VỰC SỬA LỖI --- */}
                   <img
                     className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg border"
-                    src={item.image[0]}
+                    src={item.image && item.image.length > 0 ? item.image[0] : ''} 
                     alt={item.name}
                   />
+                  {/* ----------------------- */}
   
                   <div className="flex flex-col gap-1">
                     <p className="text-sm sm:text-base font-semibold text-gray-900 line-clamp-2">
@@ -108,10 +110,10 @@ const Orders = () => {
                   </div>
                 </div>
   
-                {/* RIGHT */}
+                {/* RIGHT - giữ nguyên */}
                 <div className="flex flex-row lg:flex-col items-center lg:items-end justify-between gap-3">
                   <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-green-500"></span>
+                    <span className={`w-3 h-3 rounded-full ${item.status === 'Đã hủy' ? 'bg-red-500' : 'bg-green-500'}`}></span>
                     <p className="text-sm sm:text-base font-medium text-gray-700">
                       {item.status}
                     </p>

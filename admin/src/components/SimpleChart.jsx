@@ -171,7 +171,7 @@ const SimpleChart = ({ data, title, type = "bar" }) => {
       {/* --- MODAL HIỂN THỊ CHI TIẾT (MOBILE ONLY) --- */}
       {showModal && type === "donut" && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div 
+          <div
             className="absolute inset-0 bg-black bg-opacity-50 transition-opacity"
             onClick={() => setShowModal(false)}
           ></div>
@@ -187,31 +187,31 @@ const SimpleChart = ({ data, title, type = "bar" }) => {
             <div className="px-5 py-4 max-h-[60vh] overflow-y-auto">
               <div className="space-y-4">
                 {data.map((item, index) => {
-                   const percent = ((item.value / totalValue) * 100).toFixed(1);
-                   return (
+                  const percent = ((item.value / totalValue) * 100).toFixed(1);
+                  return (
                     <div key={index} className="flex items-start gap-3 pb-3 border-b border-gray-50 last:border-0 last:pb-0">
-                        <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs text-white font-bold shrink-0 ${BG_COLORS[index % BG_COLORS.length]}`}>
-                            {index + 1}
+                      <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs text-white font-bold shrink-0 ${BG_COLORS[index % BG_COLORS.length]}`}>
+                        {index + 1}
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-gray-800 leading-snug mb-1">{item.label}</p>
+                        <div className="w-full bg-gray-100 rounded-full h-1.5">
+                          <div className={`h-1.5 rounded-full ${BG_COLORS[index % BG_COLORS.length]}`} style={{ width: `${percent}%` }}></div>
                         </div>
-                        <div className="flex-1">
-                            <p className="text-sm font-medium text-gray-800 leading-snug mb-1">{item.label}</p>
-                            <div className="w-full bg-gray-100 rounded-full h-1.5">
-                                <div className={`h-1.5 rounded-full ${BG_COLORS[index % BG_COLORS.length]}`} style={{ width: `${percent}%` }}></div>
-                            </div>
-                        </div>
-                        <div className="text-right shrink-0">
-                            <p className="text-sm font-bold text-gray-800">{item.value}</p>
-                            <p className="text-xs text-gray-500">{percent}%</p>
-                        </div>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <p className="text-sm font-bold text-gray-800">{item.value}</p>
+                        <p className="text-xs text-gray-500">{percent}%</p>
+                      </div>
                     </div>
-                   )
+                  )
                 })}
               </div>
             </div>
             <div className="bg-gray-50 px-5 py-3 border-t border-gray-100 text-center">
-                <button onClick={() => setShowModal(false)} className="text-sm font-medium text-gray-600 hover:text-gray-800">
-                    Đóng
-                </button>
+              <button onClick={() => setShowModal(false)} className="text-sm font-medium text-gray-600 hover:text-gray-800">
+                Đóng
+              </button>
             </div>
           </div>
         </div>

@@ -17,9 +17,11 @@ import Privacy from "./pages/Privacy";
 import Shipping from "./pages/Shipping";
 import NotFound from "./pages/NotFound"; // Import NotFound
 import ProtectedRoute from "./components/ProtectedRoute";
+import ChatBot from "./components/chatBot";
 
 const App = () => {
   return (
+    <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
     <Routes>
       {/* Nested routes với Layout cho các trang chính */}
       <Route element={<Layout />}>
@@ -48,6 +50,8 @@ const App = () => {
 
       <Route path="*" element={<NotFound />} />
     </Routes>
+    <ChatBot/>
+    </div>
   );
 };
 

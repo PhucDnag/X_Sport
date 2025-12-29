@@ -74,16 +74,39 @@ const registerUser = async (req, res) => {
 };
 
 // Route for admin login
+// Route for admin login
 const adminLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+    // --- BƯỚC 1: Kiểm tra với biến môi trường (.env) ---
+    if (
+      email === process.env.ADMIN_EMAIL &&
+      password === process.env.ADMIN_PASSWORD
+    ) {
+      // Nếu khớp với .env, tạo token theo kiểu cũ (dành cho Super Admin)
       const token = jwt.sign(email + password, process.env.JWT_SECRET);
-      res.json({ success: true, token });
-    } else {
-      res.json({ success: false, message: "Thông tin đăng nhập không hợp lệ" });
+      return res.json({ success: true, token });
     }
+
+    // --- BƯỚC 2: Kiểm tra trong Database (Nếu bước 1 không khớp) ---
+    const user = await userModel.findOne({ email });
+
+    // Nếu tìm thấy user VÀ user đó có role là admin
+    if (user && user.role === "admin") {
+      // So sánh mật khẩu nhập vào với mật khẩu đã mã hóa trong DB
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (isMatch) {
+        // Nếu đúng, tạo token theo ID user (dùng hàm createToken đã khai báo ở trên)
+        const token = createToken(user._id);
+        return res.json({ success: true, token });
+      }
+    }
+
+    // --- BƯỚC 3: Nếu cả 2 bước trên đều sai ---
+    return res.json({ success: false, message: "Thông tin đăng nhập không hợp lệ" });
+
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });

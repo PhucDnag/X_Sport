@@ -8,7 +8,7 @@ import productRouter from "./routes/productRoute.js";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
 import statisticsRouter from "./routes/statisticsRoute.js";
-
+import chatRouter from './routes/chatRoute.js';
 // App Config
 const app = express();
 const port = process.env.PORT || 4000;
@@ -25,6 +25,7 @@ app.use("/api/product", productRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/statistics", statisticsRouter);
+app.use('/api/chat', chatRouter);
 
 app.get("/", (req, res) => {
   res.send("API Working");

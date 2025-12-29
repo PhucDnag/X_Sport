@@ -154,7 +154,7 @@ const buildVnpParams = ({
     vnp_Version,
     vnp_Command,
     vnp_TmnCode,
-    vnp_Amount: amount * 100, // VNPAY yêu cầu nhân 100
+    vnp_Amount: amount * 100,
     vnp_CurrCode,
     vnp_TxnRef: String(orderId),
     vnp_OrderInfo: orderInfo,
@@ -164,7 +164,7 @@ const buildVnpParams = ({
     vnp_IpAddr: ipAddr || "0.0.0.0",
     vnp_CreateDate,
   };
-  // Optional: force a specific method/bank code via env (e.g., VNPAYQR). If not set, omit this param.
+
   if (process.env.VNP_BANK_CODE) {
     params.vnp_BankCode = process.env.VNP_BANK_CODE;
   }
@@ -188,9 +188,7 @@ const encodeParamsForVnp = (obj) => {
   return out;
 };
 
-// ... (các import giữ nguyên)
 
-// HÀM KÝ MỚI (Sửa lỗi Double Encoding)
 const signVnp = (params) => {
   const secret = process.env.VNP_HASH_SECRET;
   

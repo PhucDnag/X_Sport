@@ -111,6 +111,9 @@ JWT_SECRET=your_super_secret_key_here
 # Tài khoản quản trị khởi tạo ban đầu
 ADMIN_EMAIL=
 ADMIN_PASSWORD=
+
+#API
+GEMINI_API_KEY=
 ```
 
 ---
